@@ -64,7 +64,8 @@ return "[]";
 $docname = isset($_GET["doc"]) ? $_GET["doc"]: "abc";
 $email = isset($_GET["email"]) ? $_GET["email"]: 'a@a.com';
 $dbfn = "kvf/".$email."/".$docname.".sqlite";
-
+$userpath = "kvf/".$email;
+if(!is_dir($userpath)){   mkdir (  $userpath );}
 
 //$data = array("items"=> array("num=1&area=Area&title=Title&itemlist=Gdfc%0Asgsd%0A%20ug%0AB%20ihb&ts=1612765051", "num=2&area=Area&title=Title&itemlist=Gdfc%0Asgsd%0A%20ug%0AB%20ihb&ts=1612765051") );
 // $data = array();
@@ -151,7 +152,7 @@ $out= '<!doctype html>
 <body>
 
 <div class="container">'  
-. '<div>'.$latest.'</div><h1>'.$docname.'</h1>'  
+. '<div>'.$latest.'</div><h1>'.$email.'/'.$docname.'</h1>'  
 . '<table  class="tt4">'.$tout.'';
 
 echo $out;
@@ -310,7 +311,7 @@ table, th, td {
   border-collapse: collapse;
 }
 th, td {
-    vertical-align: top;
-  padding: 8px;
+vertical-align: top;
+padding: 8px;
 }
 </style>

@@ -56,18 +56,64 @@ function pp($seq,$n,$area, $t, $d){
     $pdf->Output();
 }
 
-    if (isset($_GET['title'])) {
-        $seq = isset($_GET['seq']) ? $_GET['seq']:"1";
-        $a = isset($_GET['area']) ? $_GET['area']:"storage";
-        $n = isset($_GET['num']) ? $_GET['num']:"128";
-        $t = isset($_GET['title']) ? $_GET['title']:"title";
-        $d = isset($_GET['itemlist']) ? $_GET['itemlist']: "a\nb\nc";
-        pp($seq,$n,$a,$t, $d);
-    } else {
-        pp("","A28","area","title", "a\nb");
+function parsequery($query){
+    $aout = array();
+    // echo $query."<br>"; 
+    foreach (explode('&', $query) as $chunk) {
+        $param = explode("=", $chunk);
+    
+        if ($param) {
+
+            $k = urldecode($param[0]);
+            $v = urldecode($param[1]);
+            $aout[$k] = $v;
+            if (urldecode($param[0]) == "itemlist") {
+                $in = 1;
+                $cc = explode("\n",urldecode($param[1]));
+                $arr = array();
+                foreach ( $cc as $i  ){ 
+                    array_push($arr,$i);
+                    $in++;
+                }
+                $aout["items"] = $arr;
+
+            }
+        }
+    }
+    return $aout;
+}
+
+if (isset($_GET['doc'])) {
+    $dec =  base64_decode($_GET['doc']);
+   
+    // ["num=1&area=aaaa&title=a&itemlist=a a&ts=1612900144.054",
+    // "num=2&area=bb&title=h&itemlist=h &ts=1612904535.365",
+    // "num=3&area=cc&title=c&itemlist=v b&ts=1612900880.1"]
+    $json = preg_replace('/[[:cntrl:]]/', '', $dec);
+    $dec2 = json_decode($json);
+    $pdf = new PDF();
+    foreach($dec2 as $js){
+        // echo $js.'<br>';
+        $pdf->AddPage();
+        $d = parsequery($js);
+        
+        $pdf->kTable($d["itemlist"],$d["num"],$d["area"],$d["title"], $d["itemlist"]);
     }
 
+    $pdf->Output();
+    die();
+}
 
+if (isset($_GET['title'])) {
+    $seq = isset($_GET['seq']) ? $_GET['seq']:"1";
+    $a = isset($_GET['area']) ? $_GET['area']:"storage";
+    $n = isset($_GET['num']) ? $_GET['num']:"128";
+    $t = isset($_GET['title']) ? $_GET['title']:"title";
+    $d = isset($_GET['itemlist']) ? $_GET['itemlist']: "a\nb\nc";
+    pp($seq,$n,$a,$t, $d);
+} else {
+    pp("","A28","area","title", "a\nb");
+}
 
 
 ?>

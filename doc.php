@@ -130,7 +130,7 @@ $latest = findlatest($dbfn);
         .'</td><td width="200">'.($comma_separated)
         // .'</td><td>'.($query)
         // .'</td><td> <input type="submit" name="submit" value="Edit"  class="btn btn-primary"/>'
-        .'</td><td><a href ="edit.php?doc='.$docname.'&item='.($seq-1).'">EDIT</a>'
+        .'</td><td><a href ="edit.php?email='.$email.'&doc='.$docname.'&item='.($seq-1).'">EDIT</a>'
         .'</td><td><a href ="page.php?'.$query.'&seq='.$seq.'">PRINT</a>'
         // .'</td><td>'.($js['itemlist'])
     //    .'</td><td>'.($query)
@@ -153,6 +153,7 @@ $out= '<!doctype html>
 
 <div class="container">'  
 . '<div>'.$latest.'</div><h1>'.$email.'/'.$docname.'</h1>'  
+. '<div><a href="page.php?doc='.base64_encode($latest).'">print all </a> </div>'  
 . '<table  class="tt4">'.$tout.'';
 
 echo $out;

@@ -255,7 +255,7 @@ function updatedoc(){
  
     console.log(JSON.stringify(latest))
 
-    var fff =  'num='+num.value+'&area='+area.value+'&title='+ title.value+"&itemlist="+ textarea.value.replace(/\n/g, "%0A")+"&ts="+(Date.now() / 1000)
+    var fff =  'num='+num.value+'&area='+area.value+'&title='+ title.value+"&itemlist="+ encodeURIComponent(textarea.value)+"&ts="+(Date.now() / 1000)
      
     l2  = latest;
     l2[item] = fff;

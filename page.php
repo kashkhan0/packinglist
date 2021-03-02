@@ -25,9 +25,29 @@ function kTable($seq,$num, $area,$header, $data)
     $this->Ln();
     $this->SetFillColor(255,255,255);
     $this->SetTextColor(0);
+  $lines = explode("\n",$data);
+
+    if (count($lines ) > 7 ){
+     $f = 20 * 16 / count($lines) ;
+     $sp = $f/2;
+
+
+$this->SetFont('','',$f);
+    $fill = false;
+
+    foreach($lines as $row)
+    {
+        $this->Cell($w[0],$sp,$row,'TB',0,'L',$fill);
+        $this->Ln();
+        $fill = !$fill;
+    }
+
+
+}else{
+
+
     $this->SetFont('','',30);
     $fill = false;
-    $lines = explode("\n",$data);
     
     foreach($lines as $row)
     {
@@ -35,6 +55,8 @@ function kTable($seq,$num, $area,$header, $data)
         $this->Ln();
         $fill = !$fill;
     }
+}
+
     $this->SetTextColor(127);
     $this->SetFont('Arial','',120);
     $this->SetXY(120,25);

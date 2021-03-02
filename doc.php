@@ -152,7 +152,8 @@ $out= '<!doctype html>
 <body>
 
 <div class="container">'  
-. '<div>'.$latest.'</div><h1>'.$email.'/'.$docname.'</h1>'  
+//. '<div>'.$latest.'</div>'
+.'<h1>'.$email.'/'.$docname.'</h1>'  
 . '<div><a href="page.php?doc='.base64_encode($latest).'">print all </a> </div>'  
 . '<table  class="tt4">'.$tout.'';
 

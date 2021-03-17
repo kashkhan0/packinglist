@@ -159,6 +159,8 @@ $query = $latestjson[$item];
    </td><td> 
    <button onclick="process()"   class="btn btn-primary" >Save</button>
    </td><td>
+   <button onclick="done()"   class="btn btn-primary" >Done</button>
+  
    </td></tr>
    </table>
 ';
@@ -198,6 +200,14 @@ var e = latest;
 console.log("latest");
 console.log(latest);
  
+
+function done(){
+  process() 
+  URL = "doc.php?email=<?php echo $email;?>&doc=<?php echo $docname;?>";
+  window.open( URL)
+
+}
+
 
 function process() {
     // if (e.preventDefault) e.preventDefault();

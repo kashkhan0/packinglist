@@ -105,6 +105,75 @@ function parsequery($query){
     return $aout;
 }
 
+function findlatest($dbfn)
+{
+
+$dbh=  new SQLite3($dbfn);
+$stmt = $dbh->prepare('SELECT * FROM d1 ORDER by rowid DESC;');
+$result = $stmt->execute();
+  while($r=$result->fetchArray())
+  {
+    return $r["json"] ;
+  }
+return "[]";
+}
+
+
+
+
+
+
+
+
+// =======================================================================
+
+
+
+
+
+
+
+
+
+
+if (isset($_GET['title'])) {
+    $seq = isset($_GET['seq']) ? $_GET['seq']:"1";
+    $a = isset($_GET['area']) ? $_GET['area']:"storage";
+    $n = isset($_GET['num']) ? $_GET['num']:"128";
+    $t = isset($_GET['title']) ? $_GET['title']:"title";
+    $d = isset($_GET['itemlist']) ? $_GET['itemlist']: "a\nb\nc";
+    pp($seq,$n,$a,$t, $d);
+    die();
+} 
+
+
+
+
+$docname = isset($_GET["doc"]) ? $_GET["doc"]: "abc";
+$email = isset($_GET["email"]) ? $_GET["email"]: 'a@a.com';
+$dbfn = "kvf/".$email."/".$docname.".sqlite";
+$userpath = "kvf/".$email;
+
+
+
+if (isset($docname)) {
+    // initialize($dbfn);
+
+    $latest = findlatest($dbfn);
+    $latestjson = json_decode($latest, true);
+    $pdf = new PDF();
+    foreach($latestjson as $js){
+        // echo '<div>'.$query.'</div>';
+        $pdf->AddPage();
+        $d = parsequery($js);
+        
+        $pdf->kTable($d["itemlist"],$d["num"],$d["area"],$d["title"], $d["itemlist"]);
+    }
+    $pdf->Output();
+    die();
+}
+
+
 if (isset($_GET['doc'])) {
     $dec =  base64_decode($_GET['doc']);
    

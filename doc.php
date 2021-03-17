@@ -1,6 +1,8 @@
  <?php
 
-
+if(count($_GET) < 2 ){
+  echo '<a href="http://localhost/packing/doc.php?email=kashkhan@gmail.com&doc=packinglist2">http://localhost/packing/doc.php?email=kashkhan@gmail.com&doc=packinglist2</a>';
+}
 
 function findone($dbfn, $needle)
 {
@@ -153,8 +155,10 @@ $out= '<!doctype html>
 
 <div class="container">'  
 //. '<div>'.$latest.'</div>'
-.'<h1>'.$email.'/'.$docname.'</h1>'  
-. '<div><a href="page.php?doc='.base64_encode($latest).'">print all </a> </div>'  
+.'<h4>'.$email.'</h4>'  
+.'<h1>'.$docname.'</h1>'  
+//. '<div><a href="page.php?doc='.base64_encode($latest).'">print all </a> </div>'  
+. '<div><a href="page.php?&email='.$email.'&doc='.$docname.'">print all </a> </div>'  
 . '<table  class="tt4">'.$tout.'';
 
 echo $out;
